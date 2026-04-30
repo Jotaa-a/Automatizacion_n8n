@@ -116,13 +116,11 @@ Antes de importar los flujos en n8n, necesitas configurar las siguientes credenc
 
 ### 1. Configurar Google Sheets
 
-Crea una hoja de cálculo con las siguientes columnas en ese orden:
+En el siguiente link encontraras la hoja de calculo con la informacón de las justificaciones.
 
 ```
-ID_solicitud | Nombre | Correo | Curso | Telefono | ID_estudiante | Tipo de justificacion | Nivel de confianza | Resultados del analisis
+https://docs.google.com/spreadsheets/d/1c7nxbYbOYs04PNVqoZB7Vwrt6VR0XYXIbiL5-NfYdTk/edit?usp=sharing
 ```
-
-Copia el ID de la hoja de cálculo desde la URL (el string largo entre `/d/` y `/edit`) y reemplaza el valor en ambos flujos de n8n.
 
 ### 2. Importar los flujos en n8n
 
