@@ -122,7 +122,7 @@ $('absenceForm').addEventListener('submit', async e => {
     const formData = new FormData($('absenceForm'));
 
     // 2. Enviar a tu Webhook de n8n
-    const response = await fetch('https://jotaa.app.n8n.cloud/webhook-test/Inasistencias', {
+    const response = await fetch('https://jotaa.app.n8n.cloud/webhook/Inasistencias', {
       method: 'POST',
       body: formData // Esto envía automáticamente como multipart/form-data
     });

@@ -123,8 +123,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1520,
-        -464
+        1488,
+        -672
       ],
       "id": "267586b6-eb00-403d-bd2f-4cbe617ce95e",
       "name": "Append or update row in sheet",
@@ -150,7 +150,7 @@
                 "conditions": [
                   {
                     "leftValue": "={{ $json.Confianza }}",
-                    "rightValue": 90,
+                    "rightValue": 80,
                     "operator": {
                       "type": "number",
                       "operation": "gt"
@@ -175,7 +175,7 @@
                   {
                     "id": "7b874e0d-b854-4a8b-9c08-1d9f3a91f29d",
                     "leftValue": "={{ $json.Confianza }}",
-                    "rightValue": 60,
+                    "rightValue": 50,
                     "operator": {
                       "type": "number",
                       "operation": "gt"
@@ -218,8 +218,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        1024,
-        -272
+        992,
+        -480
       ],
       "id": "cf409867-2244-46ae-884f-f2c84d12a7f0",
       "name": "Switch"
@@ -235,8 +235,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -192,
-        -256
+        -224,
+        -464
       ],
       "id": "f8519914-4f3d-46d3-8275-f8503f74ae62",
       "name": "Recibir inasistencia",
@@ -251,8 +251,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1712,
-        -32
+        1680,
+        -240
       ],
       "id": "e76f43c1-3068-44de-be94-5fa7f47a4312",
       "name": "Requiere revisión",
@@ -273,8 +273,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1504,
-        -256
+        1472,
+        -464
       ],
       "id": "2362cf75-9bf0-471f-8966-d28ead2e5984",
       "name": "Revisión Prev.",
@@ -295,8 +295,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1728,
-        -464
+        1696,
+        -672
       ],
       "id": "412bff92-f5a0-492a-8eff-7c541d10d03a",
       "name": "Notificación Estudiante1",
@@ -320,8 +320,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        272,
-        -256
+        240,
+        -464
       ],
       "id": "f7562da5-e658-4270-99bd-dc24e9936f10",
       "name": "AI Agent",
@@ -334,8 +334,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        272,
-        -64
+        240,
+        -272
       ],
       "id": "7d63c471-f775-4d5a-b807-e14728528452",
       "name": "Google Gemini Chat Model",
@@ -359,7 +359,7 @@
             {
               "id": "713c4710-f6e5-46cc-b707-596657e89e75",
               "name": "Confianza",
-              "value": "={{ JSON.parse($json.output).confianza }}",
+              "value": "={{ $json.output.parseJson().confianza }}",
               "type": "number"
             },
             {
@@ -375,8 +375,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        688,
-        -256
+        656,
+        -464
       ],
       "id": "287c5e2b-1ef4-4502-9549-4ab0d574affa",
       "name": "Edit Fields"
@@ -440,8 +440,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1280,
-        -464
+        1248,
+        -672
       ],
       "id": "b6d3b645-4b1d-492d-bd3c-98b9ffdcf294",
       "name": "Alta Confianza"
@@ -505,11 +505,57 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1280,
-        -256
+        1456,
+        -240
       ],
-      "id": "c1ca73c1-d489-4b50-b1e8-c392cb0afe10",
-      "name": "Alta media"
+      "id": "015a4e06-5611-4d50-aa63-7eca833be0ad",
+      "name": "Baja confianza"
+    },
+    {
+      "parameters": {
+        "sendTo": "tonicracko21@gmail.com",
+        "subject": "Información",
+        "message": "Su justificación está siendo revisado por un encargado. En caso de no ser aceptado, recibirá un correo electrónico informativo al respecto.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2016,
+        -400
+      ],
+      "id": "052d5714-b6db-451e-ad78-e51f3b7fcad7",
+      "name": "noti Estudiante",
+      "webhookId": "b0a18404-0b03-4061-9d33-52814cec1c1b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "a6K2UBSbEbkZ9f6Z",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Recibir inasistencia').item.json.body.email }}",
+        "subject": "Información",
+        "message": "Su justificación ha sido recibida con éxito.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1872,
+        -672
+      ],
+      "id": "99cd7d2e-6252-407f-af22-6095eaa0ecaa",
+      "name": "noti Estudiante1",
+      "webhookId": "b0a18404-0b03-4061-9d33-52814cec1c1b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "a6K2UBSbEbkZ9f6Z",
+          "name": "Gmail OAuth2 API"
+        }
+      }
     },
     {
       "parameters": {
@@ -570,55 +616,144 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1488,
-        -32
-      ],
-      "id": "015a4e06-5611-4d50-aa63-7eca833be0ad",
-      "name": "Baja confianza"
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $('Recibir inasistencia').item.json.body.email }}",
-        "subject": "Información",
-        "message": "Se justificación está siendo revisado por un encargado. En caso de no ser aceptado, recibirá un correo electrónico informativo al respecto.",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        2048,
-        -160
-      ],
-      "id": "052d5714-b6db-451e-ad78-e51f3b7fcad7",
-      "name": "noti Estudiante",
-      "webhookId": "b0a18404-0b03-4061-9d33-52814cec1c1b",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "a6K2UBSbEbkZ9f6Z",
-          "name": "Gmail OAuth2 API"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $('Recibir inasistencia').item.json.body.email }}",
-        "subject": "Información",
-        "message": "Su justificación ha sido recibida con éxito.",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        1904,
+        1248,
         -464
       ],
-      "id": "99cd7d2e-6252-407f-af22-6095eaa0ecaa",
-      "name": "noti Estudiante1",
-      "webhookId": "b0a18404-0b03-4061-9d33-52814cec1c1b",
+      "id": "c1ca73c1-d489-4b50-b1e8-c392cb0afe10",
+      "name": "Media confianza"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1c7nxbYbOYs04PNVqoZB7Vwrt6VR0XYXIbiL5-NfYdTk",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c7nxbYbOYs04PNVqoZB7Vwrt6VR0XYXIbiL5-NfYdTk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre": "={{ $json.name }}",
+            "Correo": "={{ $json.correo }}",
+            "Curso": "={{ $json.curso }}",
+            "Telefono ": "={{ $json.telefono }}",
+            "ID_estudiante": "={{ $json['id:estudiante'] }}",
+            "Tipo de justificacion": "={{ $json.tipo_justificacion }}",
+            "Resultados del analisis": "={{ $json.razon }}",
+            "Nivel de confianza": "={{ $json.nivel_confianza }}",
+            "ID_solicitud": "={{ \"INS-\" + $now.format('X').slice(-6) }}"
+          },
+          "matchingColumns": [
+            "ID_solicitud"
+          ],
+          "schema": [
+            {
+              "id": "ID_solicitud",
+              "displayName": "ID_solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Correo",
+              "displayName": "Correo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Curso",
+              "displayName": "Curso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefono ",
+              "displayName": "Telefono ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID_estudiante",
+              "displayName": "ID_estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de justificacion",
+              "displayName": "Tipo de justificacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nivel de confianza",
+              "displayName": "Nivel de confianza",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Resultados del analisis",
+              "displayName": "Resultados del analisis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1664,
+        -464
+      ],
+      "id": "2ed001cc-3934-4f05-88cd-fc28a2c9981d",
+      "name": "Append or update row in sheet1",
       "credentials": {
-        "gmailOAuth2": {
-          "id": "a6K2UBSbEbkZ9f6Z",
-          "name": "Gmail OAuth2 API"
+        "googleSheetsOAuth2Api": {
+          "id": "k0cIU5g78RV6iniM",
+          "name": "Google Sheets OAuth2 API"
         }
       }
     }
@@ -646,7 +781,7 @@
         ],
         [
           {
-            "node": "Alta media",
+            "node": "Media confianza",
             "type": "main",
             "index": 0
           }
@@ -684,13 +819,7 @@
     },
     "Revisión Prev.": {
       "main": [
-        [
-          {
-            "node": "noti Estudiante",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Notificación Estudiante1": {
@@ -748,22 +877,38 @@
         ]
       ]
     },
-    "Alta media": {
+    "Baja confianza": {
       "main": [
         [
           {
-            "node": "Revisión Prev.",
+            "node": "Requiere revisión",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Baja confianza": {
+    "Media confianza": {
       "main": [
         [
           {
-            "node": "Requiere revisión",
+            "node": "Revisión Prev.",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append or update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "noti Estudiante",
             "type": "main",
             "index": 0
           }
