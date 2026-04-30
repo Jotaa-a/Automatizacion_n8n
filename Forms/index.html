@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reporte de Inasistencia — Institución Educativa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="page-header">
+  <div class="badge">Portal Estudiantil</div>
+  <h1>Reporte de <span>Inasistencia</span></h1>
+  <p>Completa el formulario para registrar y justificar tu ausencia</p>
+</header>
+
+<!-- Form Card -->
+<div class="card">
+  <!-- progress -->
+  <div class="steps">
+    <div class="step-dot active" id="dot1"></div>
+    <div class="step-dot" id="dot2"></div>
+    <div class="step-dot" id="dot3"></div>
+  </div>
+
+  <form id="absenceForm" novalidate>
+
+    <!-- SECCIÓN 1: Datos personales -->
+    <h2 class="section-title">Datos Personales</h2>
+    <div class="grid-2">
+      <div class="field">
+        <label for="fullName">Nombre completo <span class="req">*</span></label>
+        <input type="text" id="fullName" name="fullname" placeholder="Ej. María García López" />
+        <span class="field-error" id="err-fullName">Ingresa tu nombre completo.</span>
+      </div>
+      <div class="field">
+        <label for="studentId">ID / Código estudiantil <span class="req">*</span></label>
+        <input type="text" id="studentId" name="studentId" placeholder="Ej. 20240012" />
+        <span class="field-error" id="err-studentId">Ingresa tu código estudiantil.</span>
+      </div>
+      <div class="field full">
+        <label for="email">Correo electrónico <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="estudiante@colegio.edu.co" />
+        <span class="field-error" id="err-email">Ingresa un correo válido.</span>
+      </div>
+      <div class="field">
+        <label for="course">Curso <span class="req">*</span></label>
+        <select id="course" name="course">
+          <option value="">— Selecciona —</option>
+            <option>C3 </option>
+            <option>C4 </option>
+            <option>D1</option>
+            <option>D2 </option>
+            <option>J1</option>
+            <option>K4 </option>
+            <option>Z1 </option>
+            <option>Z2 </option>
+          </optgroup>
+        </select>
+        <span class="field-error" id="err-course">Selecciona tu curso.</span>
+      </div>
+      <div class="field">
+        <label for="phone">Teléfono de contacto</label>
+        <input type="text" id="phone" name="phone" placeholder="Ej. 300 123 4567" />
+        <span class="hint">Opcional — para seguimiento</span>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: Detalles de inasistencia -->
+    <h2 class="section-title">Detalles de la Inasistencia</h2>
+    <div class="grid-2">
+      <div class="field">
+        <label for="dateFrom">Fecha de inicio <span class="req">*</span></label>
+        <input type="date" name="dateFrom" id="dateFrom" />
+        <span class="field-error" id="err-dateFrom">Selecciona la fecha de inicio.</span>
+      </div>
+      <div class="field">
+        <label for="dateTo">Fecha de fin <span class="req">*</span></label>
+        <input type="date" name="dateTo" id="dateTo" />
+        <span class="field-error" id="err-dateTo">Selecciona la fecha de fin.</span>
+      </div>
+      <div class="field full">
+        <label for="reason">Motivo de inasistencia <span class="req">*</span></label>
+        <select id="reason" name="reason">
+          <option value="">— Selecciona un motivo —</option>
+          <option value="enfermedad">🤒 Enfermedad o incapacidad médica</option>
+          <option value="familiar">👨‍👩‍👧 Calamidad familiar</option>
+          <option value="cita_medica">🏥 Cita médica programada</option>
+          <option value="representacion">🏆 Representación institucional (deporte / cultura)</option>
+          <option value="tramite">📋 Diligencia personal o trámite oficial</option>
+          <option value="fuerza_mayor">⚠️ Fuerza mayor (accidente, desastre natural)</option>
+          <option value="otro">💬 Otro motivo</option>
+        </select>
+        <span class="field-error" id="err-reason">Selecciona el motivo.</span>
+      </div>
+      <div class="field full" id="otroField" style="display:none;">
+        <label for="otroDesc">Describe el motivo <span class="req">*</span></label>
+        <textarea id="otroDesc" name="otroDesc" placeholder="Explica brevemente el motivo de tu inasistencia…"></textarea>
+        <span class="field-error" id="err-otroDesc">Por favor describe el motivo.</span>
+      </div>
+      <div class="field full">
+        <label for="comments">Observaciones adicionales</label>
+        <textarea id="comments" name="comments" placeholder="Información adicional relevante para la institución…" style="min-height:70px;"></textarea>
+      </div>
+    </div>
+
+    SECCIÓN 3: Documento soporte
+    <h2 class="section-title">Documento de Soporte</h2>
+    <div class="field full">
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="fileInput" name="imagencita" accept="image/*" />
+        <div class="upload-icon">📎</div>
+        <p><span>Haz clic para seleccionar</span> o arrastra tu archivo aquí</p>
+        <small>Foto o scan del documento — JPG o PNG — máx. 10 MB</small>
+      </div>
+      <div class="file-preview" id="filePreview">
+        <span style="font-size:1.2rem">📄</span>
+        <span class="fname" id="fileName"></span>
+        <span class="fsize" id="fileSize"></span>
+        <button class="remove-file" id="removeFile" type="button" title="Quitar archivo">✕</button>
+      </div>
+      <span class="hint" style="margin-top:6px;">Adjunta incapacidad, formula médica, comunicado u otro soporte válido.</span>
+      <span class="field-error" id="err-file"></span>
+    </div>
+
+    <!-- Declaración -->
+    <div class="field full" style="margin-top:20px; display:flex; gap:10px; align-items:flex-start;">
+      <input type="checkbox" id="declaration" name="declaration" style="margin-top:3px; accent-color: var(--gold); width:16px; height:16px; flex-shrink:0;" />
+      <label for="declaration" style="text-transform:none; font-size:.82rem; font-weight:400; color:var(--steel); letter-spacing:0; line-height:1.5; cursor:pointer;">
+        Declaro que la información suministrada es verídica y completa. Entiendo que la presentación de información falsa puede acarrear sanciones disciplinarias. <span class="req">*</span>
+      </label>
+    </div>
+    <span class="field-error" id="err-declaration" style="margin-top:4px;"></span>
+
+    <!-- Submit -->
+    <div class="submit-row">
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span>Enviar Reporte de Inasistencia →</span>
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Success Modal -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon">✓</div>
+    <h2>¡Reporte enviado!</h2>
+    <p>Tu solicitud ha sido registrada correctamente. Recibirás una confirmación en tu correo electrónico.</p>
+    <div class="ticket" id="ticketNum">Nº de radicado: —</div>
+    <p style="font-size:.78rem; color:#8aa0b2;">El área académica revisará tu solicitud en un plazo de <strong>2 días hábiles</strong>.</p>
+    <button class="btn-new" onclick="resetForm()">Enviar otro reporte</button>
+  </div>
+</div>
+</body>
+<script src="script.js"></script>
+</html>

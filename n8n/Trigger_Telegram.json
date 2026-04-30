@@ -1,0 +1,410 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        496
+      ],
+      "id": "d36768c8-e82e-4bcd-aec8-fdf97464c6f4",
+      "name": "Telegram Trigger",
+      "webhookId": "17438214-9b44-44e9-9074-459eefad2608",
+      "credentials": {
+        "telegramApi": {
+          "id": "abykUYDXJd7fev9G",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text.toLowerCase() }}",
+                    "rightValue": "/info",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "93e6adbd-6154-46de-8698-1b8b6fc9f4c8"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Info"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "22b22e84-1916-49b9-95b7-7f6517778c1f",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "Admin2024",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Validar Contraseña"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8c7eaf09-5f88-438b-b657-b205ecff0ca2",
+                    "leftValue": "={{ $json.message.reply_to_message.text }}",
+                    "rightValue": "ID de la justificación",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Sheets"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        496
+      ],
+      "id": "1cd499f0-2f03-4417-a6ee-1f374224a2b0",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "=📋 *Datos del Radicado {{ $json.ID_Radicado }}*\n\n👤 *Estudiante:* {{ $json.Nombre }}\n📂 *Motivo:* {{ $json['Tipo de justificacion'] }}\n⚖️ *Análisis IA:* {{ $json['Resultados del analisis'] }} ",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "5b4b359a-e4da-4146-b6b8-73c769682821",
+      "name": "Enviar Resultado",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        800,
+        624
+      ],
+      "webhookId": "390bfa1a-aa51-470d-b660-c76e25d4797b",
+      "credentials": {
+        "telegramApi": {
+          "id": "abykUYDXJd7fev9G",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "🔑 *Sistema de Administración*\nPor favor, ingresa la contraseña de administrador:",
+        "replyMarkup": "forceReply",
+        "forceReply": {
+          "force_reply": true
+        },
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "b4ce0f69-168d-4b8c-aa63-631adc93563a",
+      "name": "Pedir Contraseña",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        400,
+        336
+      ],
+      "webhookId": "35d3854e-7af0-4273-a7b9-84c54eff7b67",
+      "credentials": {
+        "telegramApi": {
+          "id": "abykUYDXJd7fev9G",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dc603b61-09ca-4b36-903f-34b2d8555f8c",
+              "leftValue": "={{ $('Telegram Trigger').item.json.message.text }}",
+              "rightValue": "Admin2024",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        368,
+        512
+      ],
+      "id": "5febf69d-dede-4e4a-a4c4-65333df10aa6",
+      "name": "validar Contraseña"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "✅ *Acceso Concedido* Por favor, ingresa el ID de la justificación que deseas consultar:",
+        "replyMarkup": "forceReply",
+        "forceReply": {
+          "force_reply": true
+        },
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "89750fad-ce6d-4e21-88dd-727671edec29",
+      "name": "Pedir Id",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        592,
+        496
+      ],
+      "webhookId": "35d3854e-7af0-4273-a7b9-84c54eff7b67",
+      "credentials": {
+        "telegramApi": {
+          "id": "abykUYDXJd7fev9G",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1c7nxbYbOYs04PNVqoZB7Vwrt6VR0XYXIbiL5-NfYdTk",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c7nxbYbOYs04PNVqoZB7Vwrt6VR0XYXIbiL5-NfYdTk/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "ID_solicitud",
+              "lookupValue": "={{ $('Telegram Trigger').item.json.message.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        320,
+        704
+      ],
+      "id": "28ce22fb-e4c8-411a-a528-fefd24c768b7",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "k0cIU5g78RV6iniM",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2ce1ce60-7ba4-4ee0-87b5-9bb629f5efcd",
+              "leftValue": "={{ $json.ID_solicitud }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        528,
+        704
+      ],
+      "id": "50a3fe69-2bbe-4798-8ee6-f338c1858d6f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "❌ *Error de Búsqueda*\nNo se encontró ningún registro con el ID proporcionado. Por favor, verifica que el código sea correcto e intenta de nuevo.",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "c7ad0e1a-97ca-43dd-8e2b-3ffd0b7950e6",
+      "name": "Mensaje de Error",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        784,
+        800
+      ],
+      "webhookId": "1ef19ed9-b179-4f0d-81df-578516a41197",
+      "credentials": {
+        "telegramApi": {
+          "id": "abykUYDXJd7fev9G",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Pedir Contraseña",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "validar Contraseña",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "validar Contraseña": {
+      "main": [
+        [
+          {
+            "node": "Pedir Id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Enviar Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mensaje de Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4d145fd139d1eaaf23eb84fb90956419885a76b409816c7f74cf5f25b26e2dfe"
+  }
+}

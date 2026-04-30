@@ -1,0 +1,779 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1c7nxbYbOYs04PNVqoZB7Vwrt6VR0XYXIbiL5-NfYdTk",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c7nxbYbOYs04PNVqoZB7Vwrt6VR0XYXIbiL5-NfYdTk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre": "={{ $json.name }}",
+            "Correo": "={{ $json.correo }}",
+            "Curso": "={{ $json.curso }}",
+            "Telefono ": "={{ $json.telefono }}",
+            "ID_estudiante": "={{ $json['id:estudiante'] }}",
+            "Tipo de justificacion": "={{ $json.tipo_justificacion }}",
+            "Resultados del analisis": "={{ $json.razon }}",
+            "Nivel de confianza": "={{ $json.nivel_confianza }}",
+            "ID_solicitud": "={{ \"INS-\" + $now.format('X').slice(-6) }}"
+          },
+          "matchingColumns": [
+            "ID_solicitud"
+          ],
+          "schema": [
+            {
+              "id": "ID_solicitud",
+              "displayName": "ID_solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Correo",
+              "displayName": "Correo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Curso",
+              "displayName": "Curso",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefono ",
+              "displayName": "Telefono ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID_estudiante",
+              "displayName": "ID_estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo de justificacion",
+              "displayName": "Tipo de justificacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nivel de confianza",
+              "displayName": "Nivel de confianza",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Resultados del analisis",
+              "displayName": "Resultados del analisis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1520,
+        -464
+      ],
+      "id": "267586b6-eb00-403d-bd2f-4cbe617ce95e",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "k0cIU5g78RV6iniM",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Confianza }}",
+                    "rightValue": 90,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    },
+                    "id": "5a11cf12-b40a-4c9f-8508-32d7faf3c154"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Alta Confianza"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7b874e0d-b854-4a8b-9c08-1d9f3a91f29d",
+                    "leftValue": "={{ $json.Confianza }}",
+                    "rightValue": 60,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Confianza Media"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "70863712-16c4-457f-9d58-cca65f0a4394",
+                    "leftValue": "={{ $json.Confianza }}",
+                    "rightValue": 60,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lt"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Baja Confianza"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1024,
+        -272
+      ],
+      "id": "cf409867-2244-46ae-884f-f2c84d12a7f0",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Inasistencias",
+        "options": {
+          "binaryPropertyName": "imagencita"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        -256
+      ],
+      "id": "f8519914-4f3d-46d3-8275-f8503f74ae62",
+      "name": "Recibir inasistencia",
+      "webhookId": "7a351d13-bf81-48ea-8003-dbc0e71a4be5"
+    },
+    {
+      "parameters": {
+        "chatId": "6971272118",
+        "text": "=Se ha detectado una justificación con  {{ $('Edit Fields').item.json.Nivel }}: {{ $('Edit Fields').item.json.Confianza }}. Se requiere revisióm externa",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1712,
+        -32
+      ],
+      "id": "e76f43c1-3068-44de-be94-5fa7f47a4312",
+      "name": "Requiere revisión",
+      "webhookId": "cb26c556-e73c-45db-8d03-50475f8b5147",
+      "credentials": {
+        "telegramApi": {
+          "id": "abykUYDXJd7fev9G",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "6971272118",
+        "text": "=Se ha detectado una justificación con  {{ $('Edit Fields').item.json.Nivel }}: {{ $('Edit Fields').item.json.Confianza }}. Se requiere revisióm externa",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1504,
+        -256
+      ],
+      "id": "2362cf75-9bf0-471f-8966-d28ead2e5984",
+      "name": "Revisión Prev.",
+      "webhookId": "cb26c556-e73c-45db-8d03-50475f8b5147",
+      "credentials": {
+        "telegramApi": {
+          "id": "abykUYDXJd7fev9G",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "6971272118",
+        "text": "Justificación guardada con exito",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1728,
+        -464
+      ],
+      "id": "412bff92-f5a0-492a-8eff-7c541d10d03a",
+      "name": "Notificación Estudiante1",
+      "webhookId": "cb26c556-e73c-45db-8d03-50475f8b5147",
+      "credentials": {
+        "telegramApi": {
+          "id": "abykUYDXJd7fev9G",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un verificador de documentos escolares.\nSe te envía la imagen de una excusa o soporte médico/personal de un estudiante.\n\nDatos declarados:\n- Estudiante: {{ $json.body.fullname }}\n- Curso: {{ $json.body.course }}\n- Motivo: {{ $json.body.reason }}\n- Período: {{ $json.body.dateFrom }} al {{ $json.body.dateTo }}\n{{ $json.body.otroDesc }} '- Descripción: ' + {{ $json.body.comments }}\n\nAnaliza la imagen y responde ÚNICAMENTE con este JSON:\n{\n  \"nivel\": \"alta confianza\",\n  \"confianza\": 85,\n  \"razon\": \"explicación breve\"\n}\n\"nivel\" debe ser exactamente: \"alta confianza\", \"confianza media\" o \"baja confianza\".`;\n\nIMPORTANTE: Devuelve SOLO el objeto JSON: No incluyas markdown code blocks, backticks, o ningun conversational text.\"",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=Eres un verificador de documentos escolares.\nSe te envía la imagen de una excusa o soporte médico/personal de un estudiante.\n\nDatos declarados:\n- Estudiante: {{ $json.body.fullname }}\n- Curso: {{ $json.body.course }}\n- Motivo: {{ $json.body.reason }}\n- Período: {{ $json.body.dateFrom }} al {{ $json.body.dateTo }}\n{{ $json.body.otroDesc }} '- Descripción: ' + {{ $json.body.comments }}\n\nAnaliza la imagen y responde ÚNICAMENTE con este JSON:\n{\n  \"nivel\": \"alta confianza\",\n  \"confianza\": 85,\n  \"razon\": \"explicación breve\"\n}\n\"nivel\" debe ser exactamente: \"alta confianza\", \"confianza media\" o \"baja confianza\".`;\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        272,
+        -256
+      ],
+      "id": "f7562da5-e658-4270-99bd-dc24e9936f10",
+      "name": "AI Agent",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        272,
+        -64
+      ],
+      "id": "7d63c471-f775-4d5a-b807-e14728528452",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xHM1zvL1A9744WR3",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f7ea7d9f-c083-442f-a016-5803cb30588a",
+              "name": "Nivel",
+              "value": "={{ JSON.parse($json.output).nivel.charAt(0).toUpperCase() + JSON.parse($json.output).nivel.slice(1) }}",
+              "type": "string"
+            },
+            {
+              "id": "713c4710-f6e5-46cc-b707-596657e89e75",
+              "name": "Confianza",
+              "value": "={{ JSON.parse($json.output).confianza }}",
+              "type": "number"
+            },
+            {
+              "id": "1c6315b0-ff04-47f1-97b7-77ab33fb8547",
+              "name": "Razon",
+              "value": "={{ $json.output.parseJson().razon }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        -256
+      ],
+      "id": "287c5e2b-1ef4-4502-9549-4ab0d574affa",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dffcb422-a7fd-46dc-82a6-7d8554e3456d",
+              "name": "name",
+              "value": "={{ $('Recibir inasistencia').item.json.body.fullname }}",
+              "type": "string"
+            },
+            {
+              "id": "97965f97-f0ed-45d5-8ded-9c3353964369",
+              "name": "correo",
+              "value": "={{ $('Recibir inasistencia').item.json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "9eba30a5-c19a-400b-b81e-ea3c7a69649a",
+              "name": "curso",
+              "value": "={{ $('Recibir inasistencia').item.json.body.course }}",
+              "type": "string"
+            },
+            {
+              "id": "960e79ab-b787-45fb-b04d-a73dbb8e9aa1",
+              "name": "telefono",
+              "value": "={{ $('Recibir inasistencia').item.json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "e259c62c-ec1e-450b-9426-1aa7c5ee77bd",
+              "name": "id:estudiante",
+              "value": "={{ $('Recibir inasistencia').item.json.body.studentId }}",
+              "type": "string"
+            },
+            {
+              "id": "83bbfd9b-a338-4339-b305-7a09713692de",
+              "name": "tipo_justificacion",
+              "value": "={{ $('Recibir inasistencia').item.json.body.reason }}",
+              "type": "string"
+            },
+            {
+              "id": "702fe634-b5ff-422d-a816-849814b641b9",
+              "name": "nivel_confianza",
+              "value": "={{ $('Edit Fields').item.json.Nivel }}: {{ $('Edit Fields').item.json.Confianza }}",
+              "type": "string"
+            },
+            {
+              "id": "a4c1e6ea-094d-48aa-bd2b-cea62ae81516",
+              "name": "razon",
+              "value": "={{ $('Edit Fields').item.json.Razon }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        -464
+      ],
+      "id": "b6d3b645-4b1d-492d-bd3c-98b9ffdcf294",
+      "name": "Alta Confianza"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dffcb422-a7fd-46dc-82a6-7d8554e3456d",
+              "name": "name",
+              "value": "={{ $('Recibir inasistencia').item.json.body.fullname }}",
+              "type": "string"
+            },
+            {
+              "id": "97965f97-f0ed-45d5-8ded-9c3353964369",
+              "name": "correo",
+              "value": "={{ $('Recibir inasistencia').item.json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "9eba30a5-c19a-400b-b81e-ea3c7a69649a",
+              "name": "curso",
+              "value": "={{ $('Recibir inasistencia').item.json.body.course }}",
+              "type": "string"
+            },
+            {
+              "id": "960e79ab-b787-45fb-b04d-a73dbb8e9aa1",
+              "name": "telefono",
+              "value": "={{ $('Recibir inasistencia').item.json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "e259c62c-ec1e-450b-9426-1aa7c5ee77bd",
+              "name": "id:estudiante",
+              "value": "={{ $('Recibir inasistencia').item.json.body.studentId }}",
+              "type": "string"
+            },
+            {
+              "id": "83bbfd9b-a338-4339-b305-7a09713692de",
+              "name": "tipo_justificacion",
+              "value": "={{ $('Recibir inasistencia').item.json.body.reason }}",
+              "type": "string"
+            },
+            {
+              "id": "702fe634-b5ff-422d-a816-849814b641b9",
+              "name": "nivel_confianza",
+              "value": "={{ $('Edit Fields').item.json.Nivel }}: {{ $('Edit Fields').item.json.Confianza }}",
+              "type": "string"
+            },
+            {
+              "id": "a4c1e6ea-094d-48aa-bd2b-cea62ae81516",
+              "name": "razon",
+              "value": "={{ $('Edit Fields').item.json.Razon }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        -256
+      ],
+      "id": "c1ca73c1-d489-4b50-b1e8-c392cb0afe10",
+      "name": "Alta media"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dffcb422-a7fd-46dc-82a6-7d8554e3456d",
+              "name": "name",
+              "value": "={{ $('Recibir inasistencia').item.json.body.fullname }}",
+              "type": "string"
+            },
+            {
+              "id": "97965f97-f0ed-45d5-8ded-9c3353964369",
+              "name": "correo",
+              "value": "={{ $('Recibir inasistencia').item.json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "9eba30a5-c19a-400b-b81e-ea3c7a69649a",
+              "name": "curso",
+              "value": "={{ $('Recibir inasistencia').item.json.body.course }}",
+              "type": "string"
+            },
+            {
+              "id": "960e79ab-b787-45fb-b04d-a73dbb8e9aa1",
+              "name": "telefono",
+              "value": "={{ $('Recibir inasistencia').item.json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "e259c62c-ec1e-450b-9426-1aa7c5ee77bd",
+              "name": "id:estudiante",
+              "value": "={{ $('Recibir inasistencia').item.json.body.studentId }}",
+              "type": "string"
+            },
+            {
+              "id": "83bbfd9b-a338-4339-b305-7a09713692de",
+              "name": "tipo_justificacion",
+              "value": "={{ $('Recibir inasistencia').item.json.body.reason }}",
+              "type": "string"
+            },
+            {
+              "id": "702fe634-b5ff-422d-a816-849814b641b9",
+              "name": "nivel_confianza",
+              "value": "={{ $('Edit Fields').item.json.Nivel }}: {{ $('Edit Fields').item.json.Confianza }}",
+              "type": "string"
+            },
+            {
+              "id": "a4c1e6ea-094d-48aa-bd2b-cea62ae81516",
+              "name": "razon",
+              "value": "={{ $('Edit Fields').item.json.Razon }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1488,
+        -32
+      ],
+      "id": "015a4e06-5611-4d50-aa63-7eca833be0ad",
+      "name": "Baja confianza"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Recibir inasistencia').item.json.body.email }}",
+        "subject": "Información",
+        "message": "Se justificación está siendo revisado por un encargado. En caso de no ser aceptado, recibirá un correo electrónico informativo al respecto.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2048,
+        -160
+      ],
+      "id": "052d5714-b6db-451e-ad78-e51f3b7fcad7",
+      "name": "noti Estudiante",
+      "webhookId": "b0a18404-0b03-4061-9d33-52814cec1c1b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "a6K2UBSbEbkZ9f6Z",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Recibir inasistencia').item.json.body.email }}",
+        "subject": "Información",
+        "message": "Su justificación ha sido recibida con éxito.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1904,
+        -464
+      ],
+      "id": "99cd7d2e-6252-407f-af22-6095eaa0ecaa",
+      "name": "noti Estudiante1",
+      "webhookId": "b0a18404-0b03-4061-9d33-52814cec1c1b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "a6K2UBSbEbkZ9f6Z",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Notificación Estudiante1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Alta Confianza",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alta media",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Baja confianza",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recibir inasistencia": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Requiere revisión": {
+      "main": [
+        [
+          {
+            "node": "noti Estudiante",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revisión Prev.": {
+      "main": [
+        [
+          {
+            "node": "noti Estudiante",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notificación Estudiante1": {
+      "main": [
+        [
+          {
+            "node": "noti Estudiante1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alta Confianza": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alta media": {
+      "main": [
+        [
+          {
+            "node": "Revisión Prev.",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baja confianza": {
+      "main": [
+        [
+          {
+            "node": "Requiere revisión",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4d145fd139d1eaaf23eb84fb90956419885a76b409816c7f74cf5f25b26e2dfe"
+  }
+}
